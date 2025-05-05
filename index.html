@@ -24,6 +24,16 @@
         </form>
         <div id="loginError" class="error-message"></div>
     </div>
+    <script>
+        // Регистрация Service Worker
+        if ('serviceWorker' in navigator) {
+          window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+              .then(reg => console.log('SW registered:', reg.scope))
+              .catch(err => console.log('SW registration failed:', err));
+          });
+        }
+        </script>
     <script src="js/db.js"></script>
     <script src="js/auth.js"></script>
 </body>
