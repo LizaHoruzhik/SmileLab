@@ -833,11 +833,57 @@ function loadActivities() {
             activitiesTableBody.appendChild(row);
         });
         
-        // Переинициализируем кнопки после обновления таблицы
-        initActivityButtons();
+        // Инициализируем только кнопки в таблице
+        initTableActivityButtons();
     }
     
-    // Функция обновления расписания
+    // Инициализация кнопок в таблице (редактирование/удаление)
+    function initTableActivityButtons() {
+        // Кнопки редактирования кружков
+        document.querySelectorAll('.edit-activity').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const activityId = this.getAttribute('data-id');
+                const activity = db.activities.find(a => a.id === activityId);
+                
+                if (activity) {
+                    document.getElementById('activityId').value = activity.id;
+                    document.getElementById('activityName').value = activity.name;
+                    document.getElementById('activityPrice').value = activity.price;
+                    document.getElementById('modalActivityTitle').textContent = 'Редактировать кружок';
+                    document.getElementById('activityModal').style.display = 'block';
+                }
+            });
+        });
+        
+        // Кнопки удаления кружков
+        document.querySelectorAll('.delete-activity').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const activityId = this.getAttribute('data-id');
+                if (confirm('Вы уверены, что хотите удалить этот кружок?')) {
+                    db.activities = db.activities.filter(a => a.id !== activityId);
+                    db.schedule = db.schedule.filter(s => s.activityId !== activityId);
+                    saveDB(db);
+                    updateActivitiesTable();
+                    updateScheduleTable();
+                }
+            });
+        });
+    }
+    
+    // Инициализация основной кнопки "Создать кружок" (вызывается один раз при загрузке)
+    function initMainActivityButton() {
+        const addActivityBtn = document.getElementById('addActivityBtn');
+        if (addActivityBtn) {
+            addActivityBtn.addEventListener('click', () => {
+                document.getElementById('activityForm').reset();
+                document.getElementById('activityId').value = '';
+                document.getElementById('modalActivityTitle').textContent = 'Создать кружок';
+                document.getElementById('activityModal').style.display = 'block';
+            });
+        }
+    }
+    
+    // Остальной код оставляем без изменений
     function updateScheduleTable() {
         const scheduleTableBody = document.getElementById('scheduleTableBody');
         scheduleTableBody.innerHTML = '';
@@ -877,7 +923,6 @@ function loadActivities() {
             scheduleTableBody.appendChild(row);
         });
         
-        // Переинициализируем кнопки после обновления расписания
         initScheduleButtons();
     }
     
@@ -922,7 +967,6 @@ function loadActivities() {
         saveDB(db);
         document.getElementById('activityModal').style.display = 'none';
         
-        // Обновляем обе таблицы после изменения
         updateActivitiesTable();
         updateScheduleTable();
     });
@@ -960,28 +1004,8 @@ function loadActivities() {
         saveDB(db);
         document.getElementById('scheduleModal').style.display = 'none';
         
-        // Обновляем расписание после изменения
         updateScheduleTable();
     });
-    
-    // Инициализация кнопок
-    function initActivityButtons() {
-        const addActivityBtn = document.getElementById('addActivityBtn');
-        if (!addActivityBtn) {
-            console.error('Кнопка "Создать кружок" не найдена');
-            return;
-        }
-        
-        addActivityBtn.addEventListener('click', () => {
-            console.log('Кнопка "Создать кружок" нажата'); // Для отладки
-            document.getElementById('activityForm').reset();
-            document.getElementById('activityId').value = '';
-            document.getElementById('modalActivityTitle').textContent = 'Создать кружок';
-            document.getElementById('activityModal').style.display = 'block';
-        });
-        
-        // Остальной код инициализации кнопок редактирования
-    }
     
     function initScheduleButtons() {
         // Кнопки добавления в расписание
@@ -1008,9 +1032,22 @@ function loadActivities() {
                 document.getElementById('scheduleModal').style.display = 'block';
             });
         });
+        
+        // Кнопки удаления из расписания
+        document.querySelectorAll('.delete-schedule').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const scheduleId = this.getAttribute('data-id');
+                if (confirm('Вы уверены, что хотите удалить этот кружок из расписания?')) {
+                    db.schedule = db.schedule.filter(s => s.id !== scheduleId);
+                    saveDB(db);
+                    updateScheduleTable();
+                }
+            });
+        });
     }
     
     // Первоначальная загрузка данных
+    initMainActivityButton(); // Инициализируем основную кнопку один раз
     updateActivitiesTable();
     updateScheduleTable();
 }
