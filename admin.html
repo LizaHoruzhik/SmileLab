@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmileLab - Администратор</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Smile<span>Lab</span></h1>
+            <p>Панель администратора</p>
+        </div>
+        <div class="header-right">
+            <button id="logoutBtn" class="btn logout-btn">Выйти</button>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="groups">Группы</button>
+        <button class="tab-btn" data-tab="food">Питание</button>
+        <button class="tab-btn" data-tab="activities">Кружки</button>
+    </nav>
+
+    <main>
+        <!-- Вкладка Группы -->
+        <div id="groups" class="tab-content active">
+            <div class="section-header">
+                <h2>Управление группами</h2>
+                <button id="addGroupBtn" class="btn">Добавить группу</button>
+            </div>
+            
+            <div class="groups-list">
+                <!-- Группы будут загружаться здесь -->
+            </div>
+        </div>
+
+        <!-- Вкладка Питание -->
+<div id="food" class="tab-content">
+    <div class="section-header">
+        <h2>Управление питанием</h2>
+    </div>
+    
+    <div class="food-calendar-container">
+        <div class="month-food-section">
+            <h3 id="currentMonthTitle">Текущий месяц</h3>
+            <div class="food-calendar current-month">
+                <!-- Календарь будет сгенерирован JavaScript -->
+            </div>
+        </div>
+        <div class="month-food-section">
+            <h3 id="previousMonthTitle">Предыдущий месяц</h3>
+            <div class="food-calendar previous-month">
+                <!-- Календарь будет сгенерирован JavaScript -->
+            </div>
+        </div>
+    </div>
+</div>
+
+        <!-- Вкладка Кружки -->
+<!-- Вкладка Кружки -->
+<div id="activities" class="tab-content">
+    <div class="section-header">
+        <h2>Управление кружками</h2>
+        <button id="addActivityBtn" class="btn">Создать кружок</button>
+    </div>
+    
+    <div class="activities-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Цена</th>
+                    <th>Действия</th>
+                </tr>
+            </thead>
+            <tbody id="activitiesTableBody">
+                <!-- Список кружков будет здесь -->
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="section-header">
+        <h2>Расписание кружков</h2>
+    </div>
+    
+    <div class="schedule-container">
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th>Время</th>
+                    <th>Понедельник</th>
+                    <th>Вторник</th>
+                    <th>Среда</th>
+                    <th>Четверг</th>
+                    <th>Пятница</th>
+                </tr>
+            </thead>
+            <tbody id="scheduleTableBody">
+                <!-- Расписание будет здесь -->
+            </tbody>
+        </table>
+    </div>
+</div>
+    </main>
+
+    <!-- Модальные окна -->
+    <div id="groupModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalGroupTitle">Добавить группу</h2>
+            <form id="groupForm">
+                <input type="hidden" id="groupId">
+                <div class="form-group">
+                    <label for="groupNumber">Номер группы</label>
+                    <input type="number" id="groupNumber" required>
+                </div>
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="personModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalPersonTitle">Добавить ребенка</h2>
+            <form id="personForm">
+                <input type="hidden" id="personId">
+                <input type="hidden" id="personType">
+                <input type="hidden" id="personGroupId">
+                <div class="form-group">
+                    <label for="personFullName">ФИО</label>
+                    <input type="text" id="personFullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="personLogin">Логин</label>
+                    <input type="text" id="personLogin" required>
+                </div>
+                <div class="form-group">
+                    <label for="personBirthDate">Дата рождения</label>
+                    <input type="date" id="personBirthDate">
+                </div>
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="activityModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modalActivityTitle">Добавить кружок</h2>
+            <form id="activityForm">
+                <input type="hidden" id="activityId">
+                <div class="form-group">
+                    <label for="activityName">Название кружка</label>
+                    <input type="text" id="activityName" required>
+                </div>
+                <div class="form-group">
+                    <label for="activityPrice">Цена за занятие (₽)</label>
+                    <input type="number" id="activityPrice" required min="0">
+                </div>
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для добавления кружка в расписание -->
+    <div id="scheduleModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Добавить кружок в расписание</h2>
+            <form id="scheduleForm">
+                <input type="hidden" id="scheduleItemId">
+                <input type="hidden" id="scheduleDayHidden">
+                <input type="hidden" id="scheduleTimeHidden">
+                
+                <div class="form-group">
+                    <p><strong>День:</strong> <span id="scheduleDay"></span></p>
+                    <p><strong>Время:</strong> <span id="scheduleTime"></span></p>
+                </div>
+                
+                <div class="form-group">
+                    <label for="scheduleActivity">Выберите кружок:</label>
+                    <select id="scheduleActivity" required>
+                        <!-- Варианты будут заполнены динамически -->
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <div id="viewChildModal" class="modal">
+        <div class="modal-content wide-modal">
+            <span class="close">&times;</span>
+            <h2>Информация о ребенке</h2>
+            <div class="child-info">
+                <div class="child-main-info">
+                    <h3 id="childFullName"></h3>
+                    <p><strong>Дата рождения:</strong> <span id="childBirthDate"></span></p>
+                    <p><strong>Группа:</strong> <span id="childGroup"></span></p>
+                    <p><strong>Логин:</strong> <span id="childLogin"></span></p>
+                </div>
+                
+                <div class="child-details">
+                    <div class="child-section">
+                        <h4>Родители</h4>
+                        <div id="parentsInfo" class="parents-container">
+                            <!-- Информация о родителях будет загружаться здесь -->
+                        </div>
+                    </div>
+                    
+                    <div class="child-section">
+                        <h4>Посещение</h4>
+                        <div class="attendance-months">
+                            <div class="attendance-month">
+                                <h5>Текущий месяц</h5>
+                                <div class="attendance-calendar current-month"></div>
+                            </div>
+                            <div class="attendance-month">
+                                <h5>Предыдущий месяц</h5>
+                                <div class="attendance-calendar previous-month"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="child-section">
+                        <h4>Кружки</h4>
+                        <div id="childActivities" class="activities-container">
+                            <!-- Кружки ребенка будут загружаться здесь -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

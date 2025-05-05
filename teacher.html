@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmileLab - Воспитатель</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Smile<span>Lab</span></h1>
+            <p>Панель воспитателя</p>
+        </div>
+        <div class="header-right">
+            <button id="logoutBtn" class="btn logout-btn">Выйти</button>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="group">Моя группа</button>
+        <button class="tab-btn" data-tab="notifications">Уведомления</button>
+    </nav>
+
+    <main>
+        <!-- Вкладка Группа -->
+        <div id="group" class="tab-content active">
+            <div class="section-header">
+                <h2 id="teacherGroupName">Группа: <span></span></h2>
+            </div>
+            
+            <div class="attendance-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Ребенок</th>
+                            <th>Посещение</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Дети в группе будут загружаться здесь -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Вкладка Уведомления -->
+        <div id="notifications" class="tab-content">
+            <div class="section-header">
+                <h2>Отправить уведомление родителям</h2>
+            </div>
+            
+            <form id="notificationForm">
+                <div class="form-group">
+                    <label for="notificationTitle">Заголовок</label>
+                    <input type="text" id="notificationTitle" required>
+                </div>
+                <div class="form-group">
+                    <label for="notificationMessage">Сообщение</label>
+                    <textarea id="notificationMessage" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn">Отправить</button>
+            </form>
+            
+            <div class="sent-notifications">
+                <h3>Отправленные уведомления</h3>
+                <div id="notificationsList">
+                    <!-- Список уведомлений будет загружаться здесь -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно просмотра информации о ребенке -->
+    <div id="viewChildModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Информация о ребенке</h2>
+            <div class="child-info">
+                <h3 id="childFullName"></h3>
+                <p><strong>Дата рождения:</strong> <span id="childBirthDate"></span></p>
+                <p><strong>Группа:</strong> <span id="childGroup"></span></p>
+                
+                <h4>Родители</h4>
+                <div id="parentsInfo">
+                    <!-- Информация о родителях будет загружаться здесь -->
+                </div>
+                
+                <h4>Посещение</h4>
+                <div class="attendance-calendar">
+                    <!-- Календарь посещений будет загружаться здесь -->
+                </div>
+                
+                <h4>Кружки</h4>
+                <div id="childActivities">
+                    <!-- Кружки ребенка будут загружаться здесь -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/teacher.js"></script>
+</body>
+</html>

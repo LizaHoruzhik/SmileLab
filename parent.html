@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmileLab - Родитель</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <h1>Smile<span>Lab</span></h1>
+            <p>Панель родителя</p>
+        </div>
+        <div class="header-right">
+            <button id="logoutBtn" class="btn logout-btn">Выйти</button>
+        </div>
+    </header>
+
+    <nav class="tabs">
+        <button class="tab-btn active" data-tab="notifications">Уведомления</button>
+        <button class="tab-btn" data-tab="payments">Платежи</button>
+        <button class="tab-btn" data-tab="activities">Кружки</button>
+        <button class="tab-btn" data-tab="child">Мой ребенок</button>
+    </nav>
+
+    <main>
+        <!-- Вкладка Уведомления -->
+        <div id="notifications" class="tab-content active">
+            <div class="section-header">
+                <h2>Уведомления</h2>
+                <div class="attendance-buttons">
+                    <button id="willAttendBtn" class="btn attendance-btn present">Придет</button>
+                    <button id="willNotAttendBtn" class="btn attendance-btn absent">Не придет</button>
+                </div>
+            </div>
+            
+            <div id="notificationsList">
+                <!-- Список уведомлений будет загружаться здесь -->
+            </div>
+        </div>
+
+        <!-- Вкладка Платежи -->
+        <div id="payments" class="tab-content">
+            <div class="payment-details">
+                
+                <div class="payment-section">
+                    <h3>Кружки</h3>
+                    <div id="activitiesPayments">
+                        <!-- Платежи за кружки будут загружаться здесь -->
+                    </div>
+                </div>
+                
+                <div class="payment-total">
+                    <h3>Общая сумма к оплате</h3>
+                    <p id="totalAmount">0 ₽</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Вкладка Кружки -->
+<div id="activities" class="tab-content">
+    <div class="section-header">
+        <h2>Кружки</h2>
+        <button id="saveActivitiesBtn" class="btn">Сохранить изменения</button>
+    </div>
+    
+    <div class="activities-container">
+        <table class="schedule-table">
+            <thead>
+                <tr>
+                    <th>Кружок</th>
+                    <th>Понедельник</th>
+                    <th>Вторник</th>
+                    <th>Среда</th>
+                    <th>Четверг</th>
+                    <th>Пятница</th>
+                </tr>
+            </thead>
+            <tbody id="activitiesSchedule">
+                <!-- Расписание загружается динамически -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+        <!-- Вкладка Ребенок -->
+        <div id="child" class="tab-content">
+            <div class="section-header">
+                <h2 id="parentChildName">Ребенок: <span></span></h2>
+                <button id="editChildBtn" class="btn">Редактировать информацию</button>
+            </div>
+            
+            <div class="child-info">
+                <div class="info-section">
+                    <h3>Основная информация</h3>
+                    <p><strong>ФИО ребенка:</strong> <span id="childFullName"></span></p>
+                    <p><strong>Дата рождения:</strong> <span id="childBirthDate"></span></p>
+                    <p><strong>Группа:</strong> <span id="childGroup"></span></p>
+                </div>
+                <div class="info-section">
+                    <h3>Адрес проживания</h3>
+                    <p id="childAddress"></p>
+                </div>
+                
+                <div class="info-section">
+                    <h3>Родители</h3>
+                    <div id="parentsInfo">
+                        <!-- Информация о родителях будет загружаться здесь -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Модальное окно редактирования информации о ребенке -->
+    <div id="editChildModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Редактировать информацию о ребенке</h2>
+            <form id="editChildForm">
+                <input type="hidden" id="editChildId">
+                <div class="form-group">
+                    <label for="editChildFullName">ФИО ребенка</label>
+                    <input type="text" id="editChildFullName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editChildBirthDate">Дата рождения</label>
+                    <input type="date" id="editChildBirthDate">
+                </div>
+                <div class="form-group">
+                    <label for="editChildAddress">Адрес проживания ребенка</label>
+                    <input type="text" id="editChildAddress">
+                </div>
+                
+                <h3>Родитель 1</h3>
+                <div class="form-group">
+                    <label for="editParent1FullName">ФИО</label>
+                    <input type="text" id="editParent1FullName">
+                </div>
+                <div class="form-group">
+                    <label for="editParent1BirthDate">Дата рождения</label>
+                    <input type="date" id="editParent1BirthDate">
+                </div>
+                <div class="form-group">
+                    <label for="editParent1WorkPlace">Место работы</label>
+                    <input type="text" id="editParent1WorkPlace">
+                </div>
+                <div class="form-group">
+                    <label for="editParent1Phone">Телефон</label>
+                    <input type="tel" id="editParent1Phone">
+                </div>
+                <div class="form-group">
+                    <label for="editParent1Address">Адрес</label>
+                    <input type="text" id="editParent1Address">
+                </div>
+                
+                <h3>Родитель 2</h3>
+                <div class="form-group">
+                    <label for="editParent2FullName">ФИО</label>
+                    <input type="text" id="editParent2FullName">
+                </div>
+                <div class="form-group">
+                    <label for="editParent2BirthDate">Дата рождения</label>
+                    <input type="date" id="editParent2BirthDate">
+                </div>
+                <div class="form-group">
+                    <label for="editParent2WorkPlace">Место работы</label>
+                    <input type="text" id="editParent2WorkPlace">
+                </div>
+                <div class="form-group">
+                    <label for="editParent2Phone">Телефон</label>
+                    <input type="tel" id="editParent2Phone">
+                </div>
+                <div class="form-group">
+                    <label for="editParent2Address">Адрес</label>
+                    <input type="text" id="editParent2Address">
+                </div>
+                
+                <button type="submit" class="btn">Сохранить</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="js/db.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/parent.js"></script>
+</body>
+</html>
