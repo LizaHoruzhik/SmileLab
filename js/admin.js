@@ -966,30 +966,21 @@ function loadActivities() {
     
     // Инициализация кнопок
     function initActivityButtons() {
-        // Кнопка "Создать кружок"
-        document.getElementById('addActivityBtn')?.addEventListener('click', () => {
+        const addActivityBtn = document.getElementById('addActivityBtn');
+        if (!addActivityBtn) {
+            console.error('Кнопка "Создать кружок" не найдена');
+            return;
+        }
+        
+        addActivityBtn.addEventListener('click', () => {
+            console.log('Кнопка "Создать кружок" нажата'); // Для отладки
             document.getElementById('activityForm').reset();
             document.getElementById('activityId').value = '';
             document.getElementById('modalActivityTitle').textContent = 'Создать кружок';
             document.getElementById('activityModal').style.display = 'block';
         });
         
-        // Кнопки редактирования кружков
-        function initActivityButtons() {
-            const addActivityBtn = document.getElementById('addActivityBtn');
-            if (!addActivityBtn) {
-                console.error('Кнопка "Создать кружок" не найдена');
-                return;
-            }
-            
-            addActivityBtn.addEventListener('click', () => {
-                console.log('Кнопка "Создать кружок" нажата'); // Для отладки
-                document.getElementById('activityForm').reset();
-                document.getElementById('activityId').value = '';
-                document.getElementById('modalActivityTitle').textContent = 'Создать кружок';
-                document.getElementById('activityModal').style.display = 'block';
-            });
-        }
+        // Остальной код инициализации кнопок редактирования
     }
     
     function initScheduleButtons() {
